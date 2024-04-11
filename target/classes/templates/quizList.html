@@ -18,48 +18,113 @@
 <div class="container my-5 col-md-8">
 
 
-        <form th:action="@{/quiz/submit/{id}}" method="post"
-              style="max-width: 700px; margin: 0 auto;">
+    <form th:action="@{/quiz/commit}" method="post" th:object="${quiz}"
+          style="max-width: 700px; margin: 0 auto;">
 
-            <th:block th:each="qu : ${quizObject}">
-                <div class="card my-5" style="width: 800px;">
-                    <div class="card-header">
-                        [[${qu.question_title}]]
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div class="form_radio">
-                                <input id="radio-1" type="radio" th:name="${qu.id}" th:value="${qu.option1}">
-                                <label for="radio-1" th:text="${qu.option1}"></label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="form_radio">
-                                <input id="radio-2" type="radio" th:name="${qu.id}" th:value="${qu.option2}">
-                                <label for="radio-2" th:text="${qu.option2}"></label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="form_radio">
-                                <input id="radio-3" type="radio" th:name="${qu.id}" th:value="${qu.option3}">
-                                <label for="radio-3" th:text="${qu.option3}"></label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="form_radio">
-                                <input id="radio-4" type="radio" th:name="${qu.id}" th:value="${qu.option4}">
-                                <label for="radio-4" th:text="${qu.option4}"></label>
-                            </div>
-                        </li>
-                    </ul>
+        <div class="card my-5" style="width: 800px;">
+                <div class="card-header">
+                    [[${quizObject[0].question_title}]]
                 </div>
-            </th:block>
-        </form>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="form_radio">
+                            <input id="radio-1" type="radio" th:name="answer1" th:value="${quizObject[0].option1}">
+                            <label for="radio-1" th:text="${quizObject[0].option1}"></label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form_radio">
+                            <input id="radio-2" type="radio" th:name="answer1" th:value="${quizObject[0].option2}">
+                            <label for="radio-2" th:text="${quizObject[0].option2}"></label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form_radio">
+                            <input id="radio-3" type="radio" th:name="answer1" th:value="${quizObject[0].option3}">
+                            <label for="radio-3" th:text="${quizObject[0].option3}"></label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form_radio">
+                            <input id="radio-4" type="radio" th:name="answer1" th:value="${quizObject[0].option4}">
+                            <label for="radio-4" th:text="${quizObject[0].option4}"></label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-    <div class="text-center">
-        <button type="submit" class="btn btn-primary m-2">Проверить</button>
-        <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Отменить</button>
-    </div>
+        <div class="card my-5" style="width: 800px;">
+            <div class="card-header">
+                [[${quizObject[1].question_title}]]
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form_radio">
+                        <input id="radio-21" type="radio" th:name="answer2" th:value="${quizObject[1].option1}">
+                        <label for="radio-21" th:text="${quizObject[1].option1}"></label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form_radio">
+                        <input id="radio-22" type="radio" th:name="answer2" th:value="${quizObject[1].option2}">
+                        <label for="radio-22" th:text="${quizObject[1].option2}"></label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form_radio">
+                        <input id="radio-23" type="radio" th:name="answer2" th:value="${quizObject[1].option3}">
+                        <label for="radio-23" th:text="${quizObject[1].option3}"></label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form_radio">
+                        <input id="radio-24" type="radio" th:name="answer2" th:value="${quizObject[1].option4}">
+                        <label for="radio-24" th:text="${quizObject[1].option4}"></label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card my-5" style="width: 800px;">
+            <div class="card-header">
+                [[${quizObject[2].question_title}]]
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form_radio">
+                        <input id="radio-31" type="radio" th:name="answer3" th:value="${quizObject[2].option1}">
+                        <label for="radio-31" th:text="${quizObject[2].option1}"></label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form_radio">
+                        <input id="radio-32" type="radio" th:name="answer3" th:value="${quizObject[2].option2}">
+                        <label for="radio-32" th:text="${quizObject[2].option2}"></label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form_radio">
+                        <input id="radio-33" type="radio" th:name="answer3" th:value="${quizObject[2].option3}">
+                        <label for="radio-33" th:text="${quizObject[2].option3}"></label>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="form_radio">
+                        <input id="radio-34" type="radio" th:name="answer3" th:value="${quizObject[2].option4}">
+                        <label for="radio-34" th:text="${quizObject[2].option4}"></label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary m-2">Проверить</button>
+            <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Отменить</button>
+        </div>
+
+    </form>
+
+
 
 </div>
 

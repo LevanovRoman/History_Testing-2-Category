@@ -13,12 +13,16 @@
 <div class="container text-center my-5">
     <h1 class="my-5">WELCOME TO HISTORY TESTING</h1>
 
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+
     <form th:action="@{/quiz/create}" method="post"
           style="max-width: 700px; margin: 0 auto;">
         <div class="border border-secondary rounded p-3">
             <div class="mb-3">
                 <label for="quiz-title" class="form-label">Название теста</label>
-                <input type="text" class="form-control" name="quiz-title">
+                <input id="quiz-title" type="text" class="form-control" name="quiz-title">
             </div>
 
             <p class="text-center">Категория</p>

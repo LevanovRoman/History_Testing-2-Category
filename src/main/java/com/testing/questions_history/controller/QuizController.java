@@ -1,5 +1,6 @@
 package com.testing.questions_history.controller;
 
+import com.testing.questions_history.QuestionNotFoundException;
 import com.testing.questions_history.model.*;
 import com.testing.questions_history.service.CategoryService;
 import com.testing.questions_history.service.QuizService;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,25 +37,44 @@ public class QuizController {
     }
 
     @GetMapping("/quiz/getQuiz/{id}")
-    public String getQuizQuestions(@PathVariable Integer id, Model model){
-        List<QuestionWrapper> questionsForUser = quizService.getQuizQuestions(id);
+    public String getQuizQuestions(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            List<QuestionWrapper> questionsForUser = quizService.getQuizQuestions(id);
 
-        model.addAttribute("quizObject", questionsForUser);
-        testId = id;
-        return "quizList_2";
+            model.addAttribute("quizObject", questionsForUser);
+            testId = id;
+            return "quizList";
+        } catch (QuestionNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/quiz-home";
+        }
     }
 
 
     @PostMapping("/quiz/commit")
     public String getAnswer(@RequestParam("answer1") String answer1,
                             @RequestParam("answer2") String answer2,
-                            @RequestParam("answer3") String answer3){
-        List<String> resultList = List.of(answer1, answer2, answer3);
-        System.out.println(resultList);
-        System.out.println(testId);
-        int result = quizService.calculateResult(testId, resultList);
-        System.out.println(result);
-        return "redirect:/quiz-home";
+                            @RequestParam("answer3") String answer3,
+                            Model model, RedirectAttributes redirectAttributes) {
+        try {
+            List<String> resultList = List.of(answer1, answer2, answer3);
+            System.out.println(resultList);
+            System.out.println(testId);
+            int result = quizService.calculateResult(testId, resultList);
+            System.out.println(result);
+            model.addAttribute("result", result);
+
+            return "quiz-result";
+        } catch (QuestionNotFoundException e){
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            return "redirect:/quiz-home";
+        }
+
+    }
+
+    @GetMapping("/quiz-allResults")
+    public String getAllResults(){
+        return "quiz-allResults";
     }
 
 
