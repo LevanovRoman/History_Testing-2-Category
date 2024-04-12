@@ -1,7 +1,9 @@
 package com.testing.questions_history.controller;
 
 import com.testing.questions_history.QuestionNotFoundException;
+import com.testing.questions_history.model.Category;
 import com.testing.questions_history.model.Question;
+import com.testing.questions_history.service.CategoryService;
 import com.testing.questions_history.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,16 +20,38 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
+    private final CategoryService categoryService;
+
     @GetMapping("/")
-    public String home(){
+    public String home(Model model){
+        List<Category> categoryList = categoryService.getAllCategory();
+        model.addAttribute("categoryList", categoryList);
         return "home";
     }
 
-    @GetMapping("/questions")
-    public ModelAndView getAllQuestions(){
-        List<Question> questionList = questionService.getAllQuestions();
-        return new ModelAndView("AllQuestions", "questionsList", questionList);
+    @GetMapping("/questions/{id}")
+    public String getQuestions(@PathVariable("id") Integer id, Model model,RedirectAttributes attributes){
+        if (id == null){
+            System.out.println("CONTROLLER");
+//            List<Question> questionList = questionService.getAllQuestions();
+//            System.out.println(questionList);
+            return "home";
+        }
+        System.out.println("CONTROLLER 2");
+        String category = "python";
+        List<Question> questionList = questionService.findQuestionsByCategory(category);
+        System.out.println("CONT3");
+        model.addAttribute("questionsList", questionList);
+        return "AllQuestions";
     }
+
+//    @GetMapping("/questions")
+//    public ModelAndView getAllQuestions(){
+//        System.out.println("CONTROLLER");
+//        List<Question> questionList = questionService.getAllQuestions();
+//        System.out.println(questionList);
+//        return new ModelAndView("AllQuestions", "questionsList", questionList);
+//    }
 
     @GetMapping("/questions/new")
     public String showNewForm(Model model){

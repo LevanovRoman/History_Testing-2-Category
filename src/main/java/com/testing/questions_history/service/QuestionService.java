@@ -16,7 +16,14 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
 
     public List<Question> getAllQuestions(){
+        System.out.println("SERVICE");
         return questionRepository.findAll();
+    }
+
+    public List<Question> findQuestionsByCategory(String category){
+        List<Question> questionList =  questionRepository.findQuestionsByCategory(category);
+        System.out.println("SERVICE");
+        return questionRepository.findQuestionsByCategory(category);
     }
 
     public void save(Question question){
